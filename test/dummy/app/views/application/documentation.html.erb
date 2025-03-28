@@ -16,3 +16,26 @@ class ApplicationController < Lato::ApplicationController
   end
 end
 </pre>
+
+<h2>Creare le impostazioni iniziali</h2>
+
+<p>
+Le impostazioni iniziali possono essere create utilizzando i seed di Rails.
+</p>
+
+<pre>
+LatoSettings::Setting.create!(
+  key: 'site_name',
+  value: "Lato Settings Example",
+  label: "Site name",
+  description: "The name of the site",
+  required: true
+)
+</pre>
+
+<div class="alert alert-info mt-3">
+  <h4 class="alert-heading">Note</h4>
+  <p>
+  Il campo <code>required</code> è opzionale e può essere utilizzato per indicare che l'impostazione deve obbligatoriamente esistere nel progetto e non può essere eliminata dagli utenti.
+  </p>
+</div>
