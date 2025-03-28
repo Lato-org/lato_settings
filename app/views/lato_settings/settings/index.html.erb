@@ -1,0 +1,17 @@
+<%= lato_page_head I18n.t('lato_settings.settings') %>
+
+<div class="card mb-4">
+  <div class="card-body">
+    <%= lato_index @settings,
+      custom_actions: {
+        create: {
+          path: lato_settings.new_setting_path,
+          icon: 'bi bi-plus',
+          aria_label: I18n.t('lato_settings.add_setting'),
+          title: I18n.t('lato_settings.add_setting'),
+          data: { lato_action_target: 'trigger', turbo_frame: dom_id(LatoSettings::Setting.new, 'form'), action_title: I18n.t('lato_settings.add_setting') },
+        }
+      }
+    %>
+  </div>
+</div>

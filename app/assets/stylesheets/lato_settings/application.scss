@@ -1,0 +1,15 @@
+.controller-settings {
+  .lato-index-desk {
+    .table {
+      tbody, thead {
+        td:not(:last-child), th:not(:last-child) {
+          width: 25%;
+        }
+
+        td:last-child {
+          text-align: right;
+        }
+      }
+    }
+  }
+}

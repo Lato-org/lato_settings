@@ -1,0 +1,9 @@
+en:
+  lato_settings:
+    settings: Settings
+    add_setting: Add Setting
+    edit_setting: Edit Setting
+    cta_edit: Edit
+    cta_update: Update
+    cta_delete: Delete
+    cta_confirm: Confirm

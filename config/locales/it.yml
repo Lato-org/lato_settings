@@ -1,0 +1,18 @@
+it:
+  lato_settings:
+    settings: Impostazioni
+    add_setting: Aggiungi Impostazione
+    edit_setting: Modifica Impostazione
+    cta_edit: Modifica
+    cta_update: Aggiorna
+    cta_delete: Cancella
+    cta_confirm: Conferma
+  activerecord:
+    attributes:
+      lato_settings/setting:
+        key: Chiave
+        label: Etichetta
+        value: Valore
+        description: Descrizione
+        updated_at: Aggiornato il
+        actions: Azioni

@@ -1,0 +1,13 @@
+<%= lato_page_head I18n.t('lato_settings.add_setting'), [
+  { label: I18n.t('lato_settings.settings'), path: lato_settings.settings_path },
+  { label: I18n.t('lato_settings.add_setting') }
+] %>
+
+<div class="card mb-4">
+  <div class="card-header">
+    <h2 class="fs-4 mb-0"><%= I18n.t('lato_settings.add_setting') %></h2>
+  </div>
+  <div class="card-body">
+    <%= render 'lato_settings/settings/form', setting: @setting %>
+  </div>
+</div>
