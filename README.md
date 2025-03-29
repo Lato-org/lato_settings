@@ -31,7 +31,7 @@ end
 
 ## Todo
 
-- [ ] Add typology "number"
+- [x] Add typology "number"
 - [ ] Add typology "date"
 - [ ] Add typology "select"
 - [ ] Write tests

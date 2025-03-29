@@ -10,15 +10,24 @@ setting ||= LatoSettings::Setting.new
     <%= lato_form_errors setting, class: %w[mb-3] %>
 
     <% if setting.typology %>
+      <%= form.hidden_field :typology %>
+
       <div class="mb-3">
         <%= lato_form_item_label form, :key %>
         <%= lato_form_item_input_text form, :key, required: true, disabled: setting.persisted? %>
       </div>
 
-      <div class="mb-3">
-        <%= lato_form_item_label form, :value %>
-        <%= lato_form_item_input_text form, :value, required: true %>
-      </div>
+      <% if setting.typology == 'number' %>
+        <div class="mb-3">
+          <%= lato_form_item_label form, :value %>
+          <%= lato_form_item_input_number form, :value, required: true, min: setting.option_min, max: setting.option_max, step: setting.option_step %>
+        </div>
+      <% else %>
+        <div class="mb-3">
+          <%= lato_form_item_label form, :value %>
+          <%= lato_form_item_input_text form, :value, required: true %>
+        </div>
+      <% end %>
 
       <div class="mb-3">
         <%= lato_form_item_label form, :label %>
@@ -36,9 +45,10 @@ setting ||= LatoSettings::Setting.new
     <% elsif !setting.persisted? %>
       <div class="mb-3">
         <%= lato_form_item_label form, :typology %>
-        <%= lato_form_item_input_select form, :typology, options_for_select(LatoSettings::Setting.typologies.keys.map { |s| [s.humanize, s] }, setting.typology), required: true %>
-        <%= link_to '', lato_settings.new_setting_path(typology: ''), class: 'd-none' %>
+        <%= lato_form_item_input_select form, :typology, options_for_select(LatoSettings::Setting.typologies.keys.map { |s| [s.humanize, s] }, setting.typology), required: true, data: { lato_settings_form_target: 'inputTypology' } %>
       </div>
+
+      <%= link_to '', lato_settings.new_setting_path(typology: ''), class: 'd-none', data: { lato_settings_form_target: 'linkTypologySelected' } %>
     <% end %>
 
   <% end %>

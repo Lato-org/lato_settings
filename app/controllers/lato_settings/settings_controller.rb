@@ -46,7 +46,7 @@ module LatoSettings
     private
 
     def setting_params
-      params.require(:setting).permit(:key, :value, :label, :description)
+      params.require(:setting).permit(:key, :value, :label, :description, :typology)
     end
   end
 end

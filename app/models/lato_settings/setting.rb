@@ -35,7 +35,17 @@ module LatoSettings
     # Helpers
     ##
     
-    # ...
+    def option_min
+      options&.dig('min') || 0
+    end
+
+    def option_max
+      options&.dig('max') || nil
+    end
+
+    def option_step
+      options&.dig('step') || 1
+    end
 
     # Class
     ##
