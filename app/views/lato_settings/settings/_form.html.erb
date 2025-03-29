@@ -9,35 +9,37 @@ setting ||= LatoSettings::Setting.new
     <%= lato_form_notices class: %w[mb-3] %>
     <%= lato_form_errors setting, class: %w[mb-3] %>
 
-    <% unless setting.persisted? %>
+    <% if setting.typology %>
+      <div class="mb-3">
+        <%= lato_form_item_label form, :key %>
+        <%= lato_form_item_input_text form, :key, required: true, disabled: setting.persisted? %>
+      </div>
+
+      <div class="mb-3">
+        <%= lato_form_item_label form, :value %>
+        <%= lato_form_item_input_text form, :value, required: true %>
+      </div>
+
+      <div class="mb-3">
+        <%= lato_form_item_label form, :label %>
+        <%= lato_form_item_input_text form, :label, required: true %>
+      </div>
+
+      <div class="mb-3">
+        <%= lato_form_item_label form, :description %>
+        <%= lato_form_item_input_textarea form, :description %>
+      </div>
+
+      <div class="d-flex justify-content-end">
+        <%= lato_form_submit form, setting.persisted? ? I18n.t('lato_settings.cta_update') : I18n.t('lato_settings.cta_confirm'), class: %w[btn-success] %>
+      </div>
+    <% elsif !setting.persisted? %>
       <div class="mb-3">
         <%= lato_form_item_label form, :typology %>
         <%= lato_form_item_input_select form, :typology, options_for_select(LatoSettings::Setting.typologies.keys.map { |s| [s.humanize, s] }, setting.typology), required: true %>
-      </div>
-    
-      <div class="mb-3">
-        <%= lato_form_item_label form, :key %>
-        <%= lato_form_item_input_text form, :key, required: true %>
+        <%= link_to '', lato_settings.new_setting_path(typology: ''), class: 'd-none' %>
       </div>
     <% end %>
 
-    <div class="mb-3">
-      <%= lato_form_item_label form, :value %>
-      <%= lato_form_item_input_text form, :value, required: true %>
-    </div>
-
-    <div class="mb-3">
-      <%= lato_form_item_label form, :label %>
-      <%= lato_form_item_input_text form, :label, required: true %>
-    </div>
-
-    <div class="mb-3">
-      <%= lato_form_item_label form, :description %>
-      <%= lato_form_item_input_textarea form, :description %>
-    </div>
-
-    <div class="d-flex justify-content-end">
-      <%= lato_form_submit form, setting.persisted? ? I18n.t('lato_settings.cta_update') : I18n.t('lato_settings.cta_confirm'), class: %w[btn-success] %>
-    </div>
   <% end %>
 <% end %>

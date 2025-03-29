@@ -12,7 +12,7 @@ module LatoSettings
     end
 
     def new
-      @setting = Setting.new
+      @setting = Setting.new(typology: params[:typology])
     end
 
     def create

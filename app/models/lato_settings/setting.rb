@@ -4,6 +4,7 @@ module LatoSettings
 
     enum :typology, {
       string: 0,
+      number: 1
     }, prefix: true
 
     validates :key, presence: true, uniqueness: true, format: { with: /\A[a-zA-Z0-9_]+\z/ }

@@ -10,6 +10,7 @@ it:
   activerecord:
     attributes:
       lato_settings/setting:
+        typology: Tipologia
         key: Chiave
         label: Etichetta
         value: Valore
