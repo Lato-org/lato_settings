@@ -29,13 +29,6 @@ Rails.application.routes.draw do
 end
 ```
 
-## Todo
-
-- [x] Add typology "number"
-- [ ] Add typology "date"
-- [ ] Add typology "select"
-- [ ] Write tests
-
 ## Development
 
 Clone repository, install dependencies, run migrations and start:

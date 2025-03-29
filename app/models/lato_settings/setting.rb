@@ -4,7 +4,9 @@ module LatoSettings
 
     enum :typology, {
       string: 0,
-      number: 1
+      number: 1,
+      date: 2,
+      select: 3,
     }, prefix: true
 
     validates :key, presence: true, uniqueness: true, format: { with: /\A[a-zA-Z0-9_]+\z/ }
@@ -36,7 +38,7 @@ module LatoSettings
     ##
     
     def option_min
-      options&.dig('min') || 0
+      options&.dig('min') || nil
     end
 
     def option_max
@@ -45,6 +47,10 @@ module LatoSettings
 
     def option_step
       options&.dig('step') || 1
+    end
+
+    def option_values
+      options&.dig('values') || []
     end
 
     # Class

@@ -4,3 +4,10 @@ site_name:
   label: "Site name"
   description: "The name of the site"
   required: true
+
+site_description:
+  key: 'site_description'
+  value: "Lato Settings Example"
+  label: "Site description"
+  description: "The description of the site"
+  required: false
