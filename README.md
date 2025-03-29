@@ -29,6 +29,13 @@ Rails.application.routes.draw do
 end
 ```
 
+Import Lato Scss on **app/assets/stylesheets/application.scss** file:
+```scss
+@import 'lato_settings/application';
+
+// ....
+```
+
 Import Lato Settings Js on **app/javascript/application.js** file:
 ```js
 import "lato_settings/application";
