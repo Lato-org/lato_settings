@@ -1,0 +1,1 @@
+pin "lato_settings/application", to: "lato_settings/application.js"

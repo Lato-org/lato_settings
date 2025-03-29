@@ -1,0 +1,1 @@
+console.log("Lato Settings JS loaded");
