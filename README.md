@@ -29,6 +29,13 @@ Rails.application.routes.draw do
 end
 ```
 
+Import Lato Settings Js on **app/javascript/application.js** file:
+```js
+import "lato_settings/application";
+
+// ....
+```
+
 ## Development
 
 Clone repository, install dependencies, run migrations and start:
