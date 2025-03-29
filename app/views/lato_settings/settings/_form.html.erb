@@ -5,7 +5,7 @@ setting ||= LatoSettings::Setting.new
 %>
 
 <%= turbo_frame_tag dom_id(setting, 'form') do %>
-  <%= form_with model: setting, url: setting.persisted? ? lato_settings.setting_path(setting) : lato_settings.settings_path, data: { turbo_frame: '_self', controller: 'lato-form' } do |form| %>
+  <%= form_with model: setting, url: setting.persisted? ? lato_settings.setting_path(setting) : lato_settings.settings_path, data: { turbo_frame: '_self', controller: 'lato-form lato-settings-form' } do |form| %>
     <%= lato_form_notices class: %w[mb-3] %>
     <%= lato_form_errors setting, class: %w[mb-3] %>
 
