@@ -69,6 +69,7 @@ module LatoSettings
         cache = {}
         LatoSettings::Setting.all.select(:key, :value, :typology).each do |setting|
           cache[setting.key] = setting.value
+          cache[setting.key] = setting.value.to_f if setting.typology_number?
         end
 
         cache
