@@ -12,7 +12,7 @@ module LatoSettings
     protected
 
     def authenticate_lato_settings_admin
-      return true if @session.user.lato_settings_admin
+      return true if @session.user&.lato_settings_admin
 
       redirect_to lato.root_path, alert: 'You have not access to this section.'
     end

@@ -1,5 +1,11 @@
 module LatoSettings
   module SettingsHelper
+    def lato_settings_setting_key(setting)
+      content_tag(:span, class: 'font-monospace') do
+        setting.key
+      end
+    end
+
     def lato_settings_setting_label(setting)
       content_tag(:div, class: 'd-flex flex-column') do
         concat content_tag(:strong, setting.label)

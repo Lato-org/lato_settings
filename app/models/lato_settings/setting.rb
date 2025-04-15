@@ -30,8 +30,7 @@ module LatoSettings
     after_save :reload_cache
     after_destroy :reload_cache
     def reload_cache
-      Rails.cache.delete('LatoSettings::Setting/cache')
-      @@cache = nil
+      LatoSettings.reset_cache
     end
 
     # Helpers
@@ -57,26 +56,13 @@ module LatoSettings
     ##
     
     def self.get(key, default = nil)
-      load_cache
-
-      @@cache[key] || default
+      Rails.logger.warn "LatoSettings.get is deprecated. Use LatoSettings.get instead."
+      LatoSettings.get(key, default)
     end
 
     def self.load_cache
-      return true if defined?(@@cache) && @@cache
-
-      @@cache = Rails.cache.fetch('LatoSettings::Setting/cache') do
-        cache = {}
-        LatoSettings::Setting.all.select(:key, :value, :typology).each do |setting|
-          cache[setting.key] = setting.value
-          cache[setting.key] = setting.value.to_f if setting.typology_number?
-        end
-
-        cache
-      end
-
-      true
+      Rails.logger.warn "LatoSettings.load_cache is deprecated. Use LatoSettings.reset_cache instead."
+      LatoSettings.reset_cache
     end
-
   end
 end

@@ -12,9 +12,16 @@ setting ||= LatoSettings::Setting.new
     <% if setting.typology %>
       <%= form.hidden_field :typology %>
 
-      <div class="mb-3">
-        <%= lato_form_item_label form, :key %>
-        <%= lato_form_item_input_text form, :key, required: true, disabled: setting.persisted? %>
+      <div class="row">
+        <div class="col col-12 col-md-6 mb-3">
+          <%= lato_form_item_label form, :key %>
+          <%= lato_form_item_input_text form, :key, required: true, disabled: setting.persisted? %>
+        </div>
+
+        <div class="col col-12 col-md-6 mb-3">
+          <%= lato_form_item_label form, :label %>
+          <%= lato_form_item_input_text form, :label, required: true %>
+        </div>
       </div>
 
       <% if setting.typology == 'number' %>
@@ -38,11 +45,6 @@ setting ||= LatoSettings::Setting.new
           <%= lato_form_item_input_text form, :value, required: true %>
         </div>
       <% end %>
-
-      <div class="mb-3">
-        <%= lato_form_item_label form, :label %>
-        <%= lato_form_item_input_text form, :label, required: true %>
-      </div>
 
       <div class="mb-3">
         <%= lato_form_item_label form, :description %>

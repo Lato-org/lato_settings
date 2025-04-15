@@ -3,7 +3,7 @@
 <h2>Come utilizzare la gemma</h2>
 
 <p>
-Dopo l''installazione della gemma è possibile utilizzare le impostazioni attraverso la funzione <code>LatoSettings::Setting.get('key', 'default value')</code>.
+Dopo l''installazione della gemma è possibile utilizzare le impostazioni attraverso la funzione <code>LatoSettings.get('key', 'default value')</code>.
 </p>
 
 <pre>
@@ -11,8 +11,8 @@ class ApplicationController < Lato::ApplicationController
   # ...
 
   def index
-    @api_key = LatoSettings::Setting.get('api_key')
-    @page_title = LatoSettings::Setting.get('page_title', 'Titolo di default')
+    @api_key = LatoSettings.get('api_key')
+    @page_title = LatoSettings.get('page_title', 'Titolo di default')
   end
 end
 </pre>
