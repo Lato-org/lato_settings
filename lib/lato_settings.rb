@@ -24,8 +24,7 @@ module LatoSettings
       @cache = Rails.cache.fetch('LatoSettings/cache') do
         cache = {}
         LatoSettings::Setting.all.select(:key, :value, :typology).each do |setting|
-          cache[setting.key] = setting.value
-          cache[setting.key] = setting.value.to_f if setting.typology_number?
+          cache[setting.key] = setting.value_formatted
         end
 
         cache
