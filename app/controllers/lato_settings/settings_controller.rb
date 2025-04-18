@@ -3,7 +3,7 @@ module LatoSettings
     def index
       @settings = lato_index_collection(
         Setting.all,
-        columns: %i[key label value updated_at actions],
+        columns: %i[label value key updated_at actions],
         searchable_columns: %i[key label value],
         sortable_columns: %i[updated_at],
         pagination: true,

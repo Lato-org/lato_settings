@@ -7,3 +7,4 @@ en:
     cta_update: Update
     cta_delete: Delete
     cta_confirm: Confirm
+    cta_delete_confirm: Are you sure you want to delete this setting?
