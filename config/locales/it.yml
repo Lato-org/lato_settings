@@ -7,6 +7,7 @@ it:
     cta_update: Aggiorna
     cta_delete: Cancella
     cta_confirm: Conferma
+    cta_copy: Copia
     cta_delete_confirm: Sei sicuro di voler cancellare questa impostazione?
   activerecord:
     attributes:

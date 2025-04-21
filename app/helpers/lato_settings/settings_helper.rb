@@ -1,11 +1,11 @@
 module LatoSettings
   module SettingsHelper
     def lato_settings_setting_key(setting)
-      print_content(setting.key)
+      print_content(setting, setting.key, :key)
     end
 
     def lato_settings_setting_value(setting)
-      print_content(setting.value_formatted)
+      print_content(setting, setting.value_formatted, :value)
     end
 
     def lato_settings_setting_label(setting)
@@ -31,8 +31,15 @@ module LatoSettings
       end
     end
 
-    def print_content(content)
-      raw "<input class=\"form-control\" type=\"text\" value=\"#{content}\" readonly>"
+    def print_content(setting, content, type)
+      raw "
+        <div class=\"input-group input-group-sm\" data-controller=\"lato-copyclip\">
+          <input type=\"text\" class=\"form-control\" placeholder=\"#{setting.label || setting.key}\" aria-label=\"#{setting.label || setting.key}\" aria-describedby=\"#{type}_#{setting.id}\" value=\"#{content}\" data-lato-copyclip-target=\"input\" readonly>
+          <button class=\"btn btn-primary\" type=\"button\" id=\"#{type}_#{setting.id}\" data-lato-copyclip-target=\"button\" data-action=\"lato-copyclip#onButtonClick\" title=\"#{I18n.t('lato_settings.cta_copy')}\" aria-label=\"#{I18n.t('lato_settings.cta_copy')}\" data-copy-text=\"<i class='bi bi-clipboard-check'></i>\">
+            <i class=\"bi bi-clipboard\"></i>
+          </button>
+        </div>
+      "
     end
   end
 end
