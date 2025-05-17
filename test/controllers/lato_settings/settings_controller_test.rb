@@ -1,6 +1,6 @@
 require "test_helper"
 
-module Lato
+module LatoSettings
   class SettingsControllerTest < ActionDispatch::IntegrationTest
     setup do
       Rails.cache.clear
