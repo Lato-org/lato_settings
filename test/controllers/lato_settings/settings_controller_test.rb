@@ -1,7 +1,7 @@
 require "test_helper"
 
 module Lato
-  class AccountControllerTest < ActionDispatch::IntegrationTest
+  class SettingsControllerTest < ActionDispatch::IntegrationTest
     setup do
       Rails.cache.clear
       @user = lato_users(:user)
