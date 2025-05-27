@@ -23,7 +23,7 @@ module LatoSettings
 
       @cache = Rails.cache.fetch('LatoSettings/cache') do
         cache = {}
-        LatoSettings::Setting.all.select(:key, :value, :typology).each do |setting|
+        LatoSettings::Setting.all.each do |setting|
           cache[setting.key] = setting.value_formatted
         end
 
