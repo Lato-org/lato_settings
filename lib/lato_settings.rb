@@ -15,19 +15,22 @@ module LatoSettings
     def get(key, default = nil)
       load_cache
 
-      @cache[key] || default
+      @cache[:data][key.to_s] || default
     end
 
     def load_cache
-      return true if defined?(@cache) && @cache
+      return true if defined?(@cache) && @cache && @cache[:expires_at] && @cache[:expires_at] > Time.now
 
       @cache = Rails.cache.fetch('LatoSettings/cache') do
-        cache = {}
+        data = {}
         LatoSettings::Setting.all.each do |setting|
-          cache[setting.key] = setting.value_formatted
+          data[setting.key] = setting.value_formatted
         end
 
-        cache
+        {
+          data: data,
+          expires_at: Time.now + 1.minute
+        }
       end
 
       @cache
