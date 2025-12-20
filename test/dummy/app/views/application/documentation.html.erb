@@ -1,9 +1,9 @@
 <%= lato_page_head 'Documentation' %>
 
-<h2>Come utilizzare la gemma</h2>
+<h2>How to use the gem</h2>
 
 <p>
-Dopo l''installazione della gemma è possibile utilizzare le impostazioni attraverso la funzione <code>LatoSettings.get('key', 'default value')</code>.
+After installing the gem, you can use the settings via the function <code>LatoSettings.get('key', 'default value')</code>.
 </p>
 
 <pre>
@@ -12,15 +12,15 @@ class ApplicationController < Lato::ApplicationController
 
   def index
     @api_key = LatoSettings.get('api_key')
-    @page_title = LatoSettings.get('page_title', 'Titolo di default')
+    @page_title = LatoSettings.get('page_title', 'Default title')
   end
 end
 </pre>
 
-<h2>Creare le impostazioni iniziali</h2>
+<h2>Create initial settings</h2>
 
 <p>
-Le impostazioni iniziali possono essere create utilizzando i seed di Rails.
+Initial settings can be created using Rails seeds.
 </p>
 
 <pre>
@@ -34,8 +34,8 @@ LatoSettings::Setting.create!(
 </pre>
 
 <div class="alert alert-info mt-3">
-  <h4 class="alert-heading">Note</h4>
+  <h4 class="alert-heading">Notes</h4>
   <p>
-  Il campo <code>required</code> è opzionale e può essere utilizzato per indicare che l'impostazione deve obbligatoriamente esistere nel progetto e non può essere eliminata dagli utenti.
+  The <code>required</code> field is optional and can be used to indicate that the setting must exist in the project and cannot be deleted by users.
   </p>
 </div>
