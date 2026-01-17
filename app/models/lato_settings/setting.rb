@@ -12,7 +12,7 @@ module LatoSettings
 
     validates :key, presence: true, uniqueness: true, format: { with: /\A[a-zA-Z0-9_]+\z/ }
     validates :typology, presence: true
-    validates :value, presence: true
+    validates :value, presence: true, allow_blank: true
     validates :label, presence: true
 
     # Hooks
