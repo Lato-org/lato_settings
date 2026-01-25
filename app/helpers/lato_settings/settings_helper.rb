@@ -5,7 +5,11 @@ module LatoSettings
     end
 
     def lato_settings_setting_value(setting)
-      print_content(setting, setting.value_formatted, :value)
+      if setting.typology == 'text'
+        content_tag(:pre, setting.value_formatted.to_s, class: 'p-2 bg-light border rounded mb-0', style: 'max-height: 200px; overflow: auto;')
+      else
+        print_content(setting, setting.value_formatted, :value)
+      end
     end
 
     def lato_settings_setting_label(setting)

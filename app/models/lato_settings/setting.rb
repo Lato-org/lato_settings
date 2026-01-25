@@ -8,6 +8,7 @@ module LatoSettings
       date: 2,
       select: 3,
       integer: 4,
+      text: 5
     }, prefix: true
 
     validates :key, presence: true, uniqueness: true, format: { with: /\A[a-zA-Z0-9_]+\z/ }
@@ -51,6 +52,8 @@ module LatoSettings
         option_values.include?(value) ? value : nil
       when 'integer'
         value.to_i
+      when 'text'
+        value.to_s
       else
         value.to_s
       end

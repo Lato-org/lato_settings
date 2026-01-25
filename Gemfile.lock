@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    lato_settings (3.0.6)
+    lato_settings (3.0.8)
       lato
       rails (>= 7.1.1)
 

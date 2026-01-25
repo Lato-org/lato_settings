@@ -44,6 +44,11 @@ setting ||= LatoSettings::Setting.new
           <%= lato_form_item_label form, :value %>
           <%= lato_form_item_input_select form, :value, options_for_select(setting.option_values, setting.value), required: true %>
         </div>
+      <% elsif setting.typology == 'text' %>
+        <div class="mb-3">
+          <%= lato_form_item_label form, :value %>
+          <%= lato_form_item_input_textarea form, :value, required: true, rows: 5 %>
+        </div>
       <% else %>
         <div class="mb-3">
           <%= lato_form_item_label form, :value %>
