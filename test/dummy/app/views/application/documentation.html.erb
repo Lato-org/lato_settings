@@ -3,25 +3,26 @@
 <h2>How to use Lato Settings</h2>
 
 <p>
-  <code>lato_settings</code> is Rails engine for managing application settings inside Lato admin.
-  It provides CRUD UI for settings and helper methods to read typed values from application code.
+  <code>lato_settings</code> adds an application settings section to a Lato admin panel.
+  Use it when admins need to edit values such as site name, feature flags, limits, labels,
+  dates, or other configuration values without changing code.
 </p>
 
 <h3>Installation</h3>
 
-<p>Add Lato and Lato Settings to application Gemfile:</p>
+<p>Add Lato Settings to the application Gemfile:</p>
 
 <pre><code>gem "lato"
 gem "lato_settings"</code></pre>
 
-<p>Install dependencies, copy engine files, install migrations, and migrate database:</p>
+<p>Install the engine and run migrations:</p>
 
 <pre><code>bundle
 rails lato_settings:install:application
 rails lato_settings:install:migrations
 rails db:migrate</code></pre>
 
-<p>Mount engine in <code>config/routes.rb</code>:</p>
+<p>Mount the engine in <code>config/routes.rb</code>:</p>
 
 <pre><code>Rails.application.routes.draw do
   mount LatoSettings::Engine =&gt; "/lato-settings"
@@ -37,192 +38,98 @@ end</code></pre>
 
 <pre><code>import "lato_settings/application"</code></pre>
 
-<h3>Admin and permissions</h3>
+<h3>Permissions</h3>
 
 <p>
-  Engine pages require authenticated Lato session and admin permission.
-  Access is allowed only to users with <code>lato_settings_admin</code> set to <code>true</code>.
+  Users must be logged into Lato and must have Lato Settings admin permission enabled.
 </p>
 
 <pre><code>user = Lato::User.find_by(email: "admin@example.com")
 user.update!(lato_settings_admin: true)</code></pre>
 
-<p>
-  Engine root redirects to settings index, so mounted path becomes entry point for settings management UI.
-</p>
+<h3>What admins can do</h3>
+
+<ul>
+  <li>Create settings.</li>
+  <li>Edit setting values.</li>
+  <li>Delete optional settings.</li>
+  <li>Read labels and descriptions to understand each setting purpose.</li>
+  <li>Use type-specific inputs for text, numbers, dates, and select values.</li>
+</ul>
 
 <h3>Reading settings in application code</h3>
 
 <p>
   Read values with <code>LatoSettings.get(key, default = nil)</code>.
-  When key does not exist, method returns provided default value.
+  If the setting does not exist, the method returns the default value.
 </p>
 
-<pre><code>class ApplicationController &lt; Lato::ApplicationController
-  def index
-    @api_key = LatoSettings.get("api_key")
-    @page_title = LatoSettings.get("page_title", "Default title")
-    @items_per_page = LatoSettings.get("items_per_page", 25)
-  end
-end</code></pre>
+<pre><code>site_name = LatoSettings.get("site_name", "Default site")
+items_per_page = LatoSettings.get("items_per_page", 25)
+launch_date = LatoSettings.get("launch_date")</code></pre>
 
 <div class="alert alert-info mt-3">
-  <h4 class="alert-heading">Deprecated API</h4>
-  <p>
-    Use <code>LatoSettings.get</code>. <code>LatoSettings::Setting.get</code> is deprecated and should not be used in new code.
+  <p class="mb-0">
+    Prefer <code>LatoSettings.get</code> in new code.
   </p>
 </div>
 
-<h3>Creating initial settings</h3>
-
-<p>
-  Initial settings are usually created in <code>db/seeds.rb</code>.
-  Recommended pattern is <code>find_or_create_by!</code> to avoid duplicates across repeated seed runs.
-</p>
-
-<pre><code>LatoSettings::Setting.find_or_create_by!(key: "site_name") do |setting|
-  setting.value = "Lato Settings Example"
-  setting.label = "Site name"
-  setting.description = "The name of the site"
-  setting.typology = :string
-  setting.required = true
-end</code></pre>
-
-<p>
-  Settings can also be created and updated directly from engine admin UI.
-  New records first ask for typology, then show field type-specific form input.
-</p>
-
-<h3>Supported typologies</h3>
+<h3>Supported setting types</h3>
 
 <div class="table-responsive">
   <table class="table table-striped align-middle">
     <thead>
       <tr>
-        <th>Typology</th>
-        <th>Stored value</th>
-        <th>Returned by <code>LatoSettings.get</code></th>
-        <th>Options support</th>
+        <th>Type</th>
+        <th>Use for</th>
       </tr>
     </thead>
     <tbody>
       <tr>
         <td><code>string</code></td>
-        <td>Text</td>
-        <td><code>String</code></td>
-        <td>No</td>
-      </tr>
-      <tr>
-        <td><code>number</code></td>
-        <td>Numeric text</td>
-        <td><code>Float</code></td>
-        <td><code>min</code>, <code>max</code>, <code>step</code></td>
-      </tr>
-      <tr>
-        <td><code>date</code></td>
-        <td>Date string</td>
-        <td><code>Date</code></td>
-        <td><code>min</code>, <code>max</code></td>
-      </tr>
-      <tr>
-        <td><code>select</code></td>
-        <td>Selected option</td>
-        <td><code>String</code> or <code>nil</code> if invalid</td>
-        <td><code>values</code></td>
-      </tr>
-      <tr>
-        <td><code>integer</code></td>
-        <td>Numeric text</td>
-        <td><code>Integer</code></td>
-        <td><code>min</code>, <code>max</code>, <code>step</code></td>
+        <td>Short text values.</td>
       </tr>
       <tr>
         <td><code>text</code></td>
-        <td>Long text</td>
-        <td><code>String</code></td>
-        <td>No</td>
+        <td>Long text values.</td>
+      </tr>
+      <tr>
+        <td><code>integer</code></td>
+        <td>Whole numbers.</td>
+      </tr>
+      <tr>
+        <td><code>number</code></td>
+        <td>Decimal numbers.</td>
+      </tr>
+      <tr>
+        <td><code>date</code></td>
+        <td>Date values.</td>
+      </tr>
+      <tr>
+        <td><code>select</code></td>
+        <td>One value chosen from a list.</td>
       </tr>
     </tbody>
   </table>
 </div>
 
-<h3>Options for advanced typologies</h3>
+<h3>Initial settings</h3>
 
 <p>
-  Numeric, date, and select settings can define extra constraints in <code>options</code>.
+  Create important settings in seeds, then let admins edit values from the panel.
+  Mark a setting as required when it must not be deleted from the UI.
 </p>
 
-<pre><code>LatoSettings::Setting.create!(
-  key: "price_multiplier",
-  value: 1.25,
-  label: "Price multiplier",
-  description: "Multiplier applied to base price",
-  typology: :number,
-  options: { min: 0, max: 10, step: 0.01 }
-)
+<pre><code>LatoSettings::Setting.find_or_create_by!(key: "site_name") do |setting|
+  setting.value = "My application"
+  setting.label = "Site name"
+  setting.description = "Name shown in public pages"
+  setting.typology = :string
+  setting.required = true
+end</code></pre>
 
-LatoSettings::Setting.create!(
-  key: "launch_date",
-  value: "2026-01-15",
-  label: "Launch date",
-  description: "Planned launch date",
-  typology: :date,
-  options: { min: "2026-01-01", max: "2026-12-31" }
-)
-
-LatoSettings::Setting.create!(
-  key: "theme",
-  value: "light",
-  label: "Theme",
-  description: "Active application theme",
-  typology: :select,
-  options: { values: ["light", "dark", "system"] }
-)</code></pre>
+<h3>Key format</h3>
 
 <p>
-  For <code>select</code>, stored value must exist in <code>options[:values]</code>. Otherwise formatted value becomes <code>nil</code>.
-</p>
-
-<h3>Validation and key normalization</h3>
-
-<p>
-  Setting keys must be unique and use only letters, numbers, and underscores.
-  Before validation, key is normalized with lowercase and underscore formatting.
-</p>
-
-<pre><code>"Site Name"   # =&gt; "site_name"
-"API-KEY"     # =&gt; "api_key"
-"Main.Config" # =&gt; "main_config"</code></pre>
-
-<p>
-  Labels and values are required. Description is optional.
-</p>
-
-<h3>Required settings</h3>
-
-<p>
-  Set <code>required: true</code> when setting must exist in project and must not be deleted by admin users.
-  Required settings are still editable, but destroy action is blocked.
-</p>
-
-<pre><code>LatoSettings::Setting.create!(
-  key: "app_name",
-  value: "My Application",
-  label: "Application name",
-  typology: :string,
-  required: true
-)</code></pre>
-
-<h3>Cache behavior</h3>
-
-<p>
-  Values returned by <code>LatoSettings.get</code> are loaded from cache.
-  Cache entry is stored in <code>Rails.cache</code> and expires after about one minute.
-  Saving or destroying a setting resets cache immediately.
-</p>
-
-<pre><code>LatoSettings.reset_cache</code></pre>
-
-<p>
-  Manual reset is useful after low-level data changes outside normal model callbacks.
+  Use clear lowercase keys with underscores, such as <code>site_name</code>, <code>items_per_page</code>, or <code>launch_date</code>.
 </p>

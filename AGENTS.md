@@ -2,8 +2,15 @@
 
 ## Project overview
 
-`lato_settings` is Rails engine for managing application settings in Lato projects.
-It provides admin UI, typed value formatting, and cached read access via `LatoSettings.get`.
+Lato is ecosystem of Rails engines for building admin panels with authentication, user management, Bootstrap UI, reusable components, operations, settings, storage, spaces, and CMS features.
+
+`lato_settings` is extension gem for the base `lato` engine.
+
+## Gem purpose
+
+`lato_settings` adds application settings management to a Lato admin panel.
+
+Admins can create, edit, and delete configurable values. Application code can read those values with `LatoSettings.get`.
 
 ## Local setup
 
@@ -39,6 +46,7 @@ It provides admin UI, typed value formatting, and cached read access via `LatoSe
 
 ## Notes for agents
 
-- Update dummy documentation when public behavior changes
-- Keep examples aligned with actual engine routes and supported typologies
-- Do not duplicate README install text beyond agent-focused summary here
+- User-facing documentation lives in `test/dummy/app/views/application/documentation.html.erb`
+- Keep that file updated whenever install steps, permissions, configuration, supported typologies, or usage changes
+- Documentation should explain what the gem does, how to install it, and how to use it
+- Avoid internal implementation details such as controller internals, route lists, private models, cache mechanics, or database mechanics unless required for usage
