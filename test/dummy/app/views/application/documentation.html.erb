@@ -10,6 +10,12 @@
 
 <h3>Installation</h3>
 
+<p>Requires Rails 8.1.3.1 or newer in the 8.1 series and Lato 3.25.0 or newer.
+Existing applications must run <code>rails lato:install:migrations</code> and <code>rails db:migrate</code>
+before deployment. Previous sessions are invalidated.</p>
+
+<p>Values, keys, and labels are displayed as plain text. HTML is escaped, including existing saved settings.</p>
+
 <p>Add Lato Settings to the application Gemfile:</p>
 
 <pre><code>gem "lato"

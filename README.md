@@ -1,7 +1,11 @@
 # Lato Settings
 Manage application settings on Lato projects.
 
+Setting values, keys, and labels are displayed as plain text in the administration interface, including values saved before upgrading. HTML in these fields is escaped.
+
 ## Installation
+
+Requires Rails 8.1.3.1 or newer in the 8.1 series and Lato 3.25.0 or newer. Existing applications must install the new Lato session migration before deployment; previous sessions are invalidated.
 Add required dependencies to your application's Gemfile:
 
 ```ruby

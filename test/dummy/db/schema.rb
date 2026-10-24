@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2025_12_20_182711) do
+ActiveRecord::Schema[8.1].define(version: 2026_10_24_103046) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.bigint "blob_id", null: false
     t.datetime "created_at", null: false
@@ -83,6 +83,21 @@ ActiveRecord::Schema[8.1].define(version: 2025_12_20_182711) do
     t.index ["lato_user_id"], name: "index_lato_operations_on_lato_user_id"
   end
 
+  create_table "lato_session_records", force: :cascade do |t|
+    t.integer "lato_user_id", null: false
+    t.string "token_digest", null: false
+    t.datetime "expires_at", null: false
+    t.string "security_grant_action"
+    t.datetime "security_grant_expires_at"
+    t.string "security_challenge"
+    t.datetime "security_challenge_expires_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["expires_at"], name: "index_lato_session_records_on_expires_at"
+    t.index ["lato_user_id"], name: "index_lato_session_records_on_lato_user_id"
+    t.index ["token_digest"], name: "index_lato_session_records_on_token_digest", unique: true
+  end
+
   create_table "lato_settings_settings", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.string "description"
@@ -122,4 +137,5 @@ ActiveRecord::Schema[8.1].define(version: 2025_12_20_182711) do
   add_foreign_key "lato_log_user_signins", "lato_users"
   add_foreign_key "lato_log_user_signups", "lato_users"
   add_foreign_key "lato_operations", "lato_users"
+  add_foreign_key "lato_session_records", "lato_users"
 end

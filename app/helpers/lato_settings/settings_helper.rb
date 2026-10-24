@@ -36,14 +36,21 @@ module LatoSettings
     end
 
     def print_content(setting, content, type)
-      raw "
-        <div class=\"input-group input-group-sm\" data-controller=\"lato-copyclip\">
-          <input type=\"text\" class=\"form-control\" placeholder=\"#{setting.label || setting.key}\" aria-label=\"#{setting.label || setting.key}\" aria-describedby=\"#{type}_#{setting.id}\" value=\"#{content}\" data-lato-copyclip-target=\"input\" readonly>
-          <button class=\"btn btn-primary\" type=\"button\" id=\"#{type}_#{setting.id}\" data-lato-copyclip-target=\"button\" data-action=\"lato-copyclip#onButtonClick\" title=\"#{I18n.t('lato_settings.cta_copy')}\" aria-label=\"#{I18n.t('lato_settings.cta_copy')}\" data-copy-text=\"<i class='bi bi-clipboard-check'></i>\">
-            <i class=\"bi bi-clipboard\"></i>
-          </button>
-        </div>
-      "
+      label = setting.label || setting.key
+      button_id = "#{type}_#{setting.id}"
+      copy_label = I18n.t("lato_settings.cta_copy")
+
+      content_tag(:div, class: "input-group input-group-sm", data: { controller: "lato-copyclip" }) do
+        concat tag.input(type: "text", class: "form-control", placeholder: label,
+          aria: { label: label, describedby: button_id }, value: content, readonly: true,
+          data: { lato_copyclip_target: "input" })
+        concat content_tag(:button, type: "button", id: button_id, class: "btn btn-primary",
+          title: copy_label, aria: { label: copy_label },
+          data: { lato_copyclip_target: "button", action: "lato-copyclip#onButtonClick",
+            copy_text: "<i class='bi bi-clipboard-check'></i>" }) {
+          content_tag(:i, "", class: "bi bi-clipboard")
+        }
+      end
     end
   end
 end
