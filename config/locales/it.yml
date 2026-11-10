@@ -3,12 +3,47 @@ it:
     settings: Impostazioni
     add_setting: Aggiungi Impostazione
     edit_setting: Modifica Impostazione
+    required: Obbligatoria
     cta_edit: Modifica
+    cta_edit_setting: "Modifica %{label}"
     cta_update: Aggiorna
     cta_delete: Cancella
+    cta_delete_setting: "Cancella %{label}"
     cta_confirm: Conferma
+    cta_continue: Continua
     cta_copy: Copia
+    cta_copy_value: "Copia il valore di %{label}"
     cta_delete_confirm: Sei sicuro di voler cancellare questa impostazione?
+    setting_created: Impostazione creata con successo.
+    setting_updated: Impostazione aggiornata con successo.
+    setting_deleted: Impostazione cancellata con successo.
+    setting_required_not_deletable: Le impostazioni obbligatorie non possono essere cancellate.
+    typologies:
+      string: Stringa
+      number: Numero
+      date: Data
+      select: Selezione
+      integer: Intero
+      text: Testo
+    help:
+      key_immutable: La chiave non può essere modificata dopo la creazione.
+      string: Testo breve.
+      text: Testo lungo.
+      integer: Numero intero.
+      number: Numero decimale.
+      date: Data nel formato AAAA-MM-GG.
+      select: Scegli uno dei valori consentiti.
+      min: "Minimo: %{value}."
+      max: "Massimo: %{value}."
+      step: "Passo: %{value}."
+    validation:
+      not_integer: deve essere un numero intero
+      not_number: deve essere un numero
+      not_date: deve essere una data valida (AAAA-MM-GG)
+      not_in_values: deve essere uno dei valori consentiti
+      too_small: "deve essere maggiore o uguale a %{min}"
+      too_big: "deve essere minore o uguale a %{max}"
+      not_on_step: "deve essere un multiplo di %{step} (a partire dal minimo)"
   activerecord:
     attributes:
       lato_settings/setting:

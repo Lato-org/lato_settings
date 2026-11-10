@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   mount Lato::Engine => "/lato"
-  mount LatoSettings::Engine => "/lato_settings"
+  mount LatoSettings::Engine => "/lato-settings"
 
   root 'application#index'
 

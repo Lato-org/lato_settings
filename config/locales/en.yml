@@ -3,9 +3,54 @@ en:
     settings: Settings
     add_setting: Add Setting
     edit_setting: Edit Setting
+    required: Required
     cta_edit: Edit
+    cta_edit_setting: "Edit %{label}"
     cta_update: Update
     cta_delete: Delete
+    cta_delete_setting: "Delete %{label}"
     cta_confirm: Confirm
+    cta_continue: Continue
     cta_copy: Copy
+    cta_copy_value: "Copy value of %{label}"
     cta_delete_confirm: Are you sure you want to delete this setting?
+    setting_created: Setting created successfully.
+    setting_updated: Setting updated successfully.
+    setting_deleted: Setting deleted successfully.
+    setting_required_not_deletable: Required settings cannot be deleted.
+    typologies:
+      string: String
+      number: Number
+      date: Date
+      select: Select
+      integer: Integer
+      text: Text
+    help:
+      key_immutable: The key cannot be changed after creation.
+      string: Short text.
+      text: Long text.
+      integer: Whole number.
+      number: Decimal number.
+      date: Date in YYYY-MM-DD format.
+      select: Choose one of the allowed values.
+      min: "Minimum: %{value}."
+      max: "Maximum: %{value}."
+      step: "Step: %{value}."
+    validation:
+      not_integer: must be a whole number
+      not_number: must be a number
+      not_date: must be a valid date (YYYY-MM-DD)
+      not_in_values: must be one of the allowed values
+      too_small: "must be greater than or equal to %{min}"
+      too_big: "must be less than or equal to %{max}"
+      not_on_step: "must be a multiple of %{step} (starting from the minimum)"
+  activerecord:
+    attributes:
+      lato_settings/setting:
+        typology: Type
+        key: Key
+        label: Label
+        value: Value
+        description: Description
+        updated_at: Updated at
+        actions: Actions

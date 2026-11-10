@@ -1,1 +1,1 @@
-console.log("Lato Settings JS loaded");
+// Lato Settings has no custom JavaScript: copy buttons use the Lato "lato-copyclip" controller.

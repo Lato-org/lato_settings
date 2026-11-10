@@ -1,21 +1,27 @@
 <%
 
 setting ||= LatoSettings::Setting.new
+value_help = lato_settings_value_help(setting)
+value_help_id = 'setting_value_help'
+value_options = { required: true, aria: { describedby: value_help_id } }
 
 %>
 
 <%= turbo_frame_tag dom_id(setting, 'form') do %>
-  <%= form_with model: setting, url: setting.persisted? ? lato_settings.setting_path(setting) : lato_settings.settings_path, data: { turbo_frame: '_self', controller: 'lato-form lato-settings-form' } do |form| %>
-    <%= lato_form_notices class: %w[mb-3] %>
-    <%= lato_form_errors setting, class: %w[mb-3] %>
+  <% if setting.typology %>
+    <%= form_with model: setting, url: setting.persisted? ? lato_settings.setting_path(setting) : lato_settings.settings_path, data: { turbo_frame: '_self', controller: 'lato-form' } do |form| %>
+      <%= lato_form_notices class: %w[mb-3] %>
+      <%= lato_form_errors setting, class: %w[mb-3] %>
 
-    <% if setting.typology %>
-      <%= form.hidden_field :typology %>
+      <%= form.hidden_field :typology if setting.new_record? %>
 
       <div class="row">
         <div class="col col-12 col-md-6 mb-3">
           <%= lato_form_item_label form, :key %>
-          <%= lato_form_item_input_text form, :key, required: true, disabled: setting.persisted? %>
+          <%= lato_form_item_input_text form, :key, required: true, readonly: setting.persisted?, aria: { describedby: ('setting_key_help' if setting.persisted?) } %>
+          <% if setting.persisted? %>
+            <div id="setting_key_help" class="form-text"><%= I18n.t('lato_settings.help.key_immutable') %></div>
+          <% end %>
         </div>
 
         <div class="col col-12 col-md-6 mb-3">
@@ -24,37 +30,28 @@ setting ||= LatoSettings::Setting.new
         </div>
       </div>
 
-      <% if setting.typology == 'number' %>
-        <div class="mb-3">
-          <%= lato_form_item_label form, :value %>
-          <%= lato_form_item_input_number form, :value, required: true, min: setting.option_min, max: setting.option_max, step: setting.option_step %>
+      <div class="mb-3">
+        <%= lato_form_item_label form, :value %>
+        <% if setting.typology == 'number' %>
+          <%= lato_form_item_input_number form, :value, **{ min: setting.option_min, max: setting.option_max, step: setting.option_step_configured || 'any' }, **value_options %>
+        <% elsif setting.typology == 'integer' %>
+          <%= lato_form_item_input_number form, :value, **{ min: setting.option_min, max: setting.option_max, step: setting.option_step_configured || 1 }, **value_options %>
+        <% elsif setting.typology == 'date' %>
+          <%= lato_form_item_input_date form, :value, **{ min: setting.option_min, max: setting.option_max }, **value_options %>
+        <% elsif setting.typology == 'select' %>
+          <%= lato_form_item_input_select form, :value, options_for_select(setting.option_values, setting.value), value_options %>
+        <% elsif setting.typology == 'text' %>
+          <%= lato_form_item_input_textarea form, :value, rows: 5, **value_options %>
+        <% else %>
+          <%= lato_form_item_input_text form, :value, **value_options %>
+        <% end %>
+        <div id="<%= value_help_id %>" class="form-text">
+          <%= value_help %>
+          <% if setting.description.present? && setting.persisted? %>
+            <div><%= setting.description %></div>
+          <% end %>
         </div>
-      <% elsif setting.typology == 'integer' %>
-        <div class="mb-3">
-          <%= lato_form_item_label form, :value %>
-          <%= lato_form_item_input_number form, :value, required: true, min: setting.option_min, max: setting.option_max, step: 1 %>
-        </div>
-      <% elsif setting.typology == 'date' %>
-        <div class="mb-3">
-          <%= lato_form_item_label form, :value %>
-          <%= lato_form_item_input_date form, :value, required: true, min: setting.option_min, max: setting.option_max %>
-        </div>
-      <% elsif setting.typology == 'select' %>
-        <div class="mb-3">
-          <%= lato_form_item_label form, :value %>
-          <%= lato_form_item_input_select form, :value, options_for_select(setting.option_values, setting.value), required: true %>
-        </div>
-      <% elsif setting.typology == 'text' %>
-        <div class="mb-3">
-          <%= lato_form_item_label form, :value %>
-          <%= lato_form_item_input_textarea form, :value, required: true, rows: 5 %>
-        </div>
-      <% else %>
-        <div class="mb-3">
-          <%= lato_form_item_label form, :value %>
-          <%= lato_form_item_input_text form, :value, required: true %>
-        </div>
-      <% end %>
+      </div>
 
       <div class="mb-3">
         <%= lato_form_item_label form, :description %>
@@ -64,14 +61,18 @@ setting ||= LatoSettings::Setting.new
       <div class="d-flex justify-content-end">
         <%= lato_form_submit form, setting.persisted? ? I18n.t('lato_settings.cta_update') : I18n.t('lato_settings.cta_confirm'), class: %w[btn-success] %>
       </div>
-    <% elsif !setting.persisted? %>
+    <% end %>
+  <% else %>
+    <%# typology step: explicit submit instead of navigating on change (WCAG 3.2.2) %>
+    <%= form_with url: lato_settings.new_setting_path, method: :get, data: { turbo_frame: '_self' } do |form| %>
       <div class="mb-3">
-        <%= lato_form_item_label form, :typology %>
-        <%= lato_form_item_input_select form, :typology, options_for_select(LatoSettings::Setting.typologies.keys.map { |s| [s.humanize, s] }, setting.typology), required: true, data: { lato_settings_form_target: 'inputTypology' } %>
+        <%= form.label :typology, LatoSettings::Setting.human_attribute_name(:typology), class: 'form-label' %>
+        <%= form.select :typology, options_for_select(lato_settings_typology_options), {}, class: 'form-control', required: true %>
       </div>
 
-      <%= link_to '', lato_settings.new_setting_path(typology: ''), class: 'd-none', data: { lato_settings_form_target: 'linkTypologySelected' } %>
+      <div class="d-flex justify-content-end">
+        <%= form.submit I18n.t('lato_settings.cta_continue'), class: 'btn btn-primary', name: nil %>
+      </div>
     <% end %>
-
   <% end %>
 <% end %>

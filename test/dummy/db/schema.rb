@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_10_24_103046) do
+ActiveRecord::Schema[8.1].define(version: 2026_11_10_090000) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.bigint "blob_id", null: false
     t.datetime "created_at", null: false
@@ -100,14 +100,14 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_24_103046) do
 
   create_table "lato_settings_settings", force: :cascade do |t|
     t.datetime "created_at", null: false
-    t.string "description"
+    t.text "description"
     t.string "key", null: false
     t.string "label"
     t.json "options"
     t.boolean "required", default: false
     t.integer "typology", default: 0
     t.datetime "updated_at", null: false
-    t.string "value"
+    t.text "value"
     t.index ["key"], name: "index_lato_settings_settings_on_key", unique: true
   end
 

@@ -6,7 +6,7 @@ Gem::Specification.new do |spec|
   spec.authors     = ["Gregorio Galante"]
   spec.email       = ["me@gregoriogalante.com"]
   spec.homepage    = "https://github.com/Lato-org/lato_settings"
-  spec.summary     = "Another engine for Lato projects"
+  spec.summary     = "Application settings management for Lato projects"
   spec.description = "A Rails engine to manage application settings on Lato projects!"
   spec.license     = "MIT"
 
