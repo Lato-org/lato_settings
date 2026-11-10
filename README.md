@@ -1,11 +1,11 @@
 # Lato Settings
 Manage application settings on Lato projects.
 
-Setting values, keys, and labels are displayed as plain text in the administration interface, including values saved before upgrading. HTML in these fields is escaped.
+Setting values, keys, and labels are displayed as plain text in the administration interface. HTML in these fields is escaped.
 
 ## Installation
 
-Requires Rails 8.1.3.1 or newer in the 8.1 series and Lato 3.25.0 or newer. Existing applications must install the new Lato session migration (`rails lato:install:migrations`) before deployment; previous sessions are invalidated.
+Requires Rails 8.1.3.1 or newer in the 8.1 series and Lato 3.25.0 or newer.
 Add required dependencies to your application's Gemfile:
 
 ```ruby
@@ -103,6 +103,16 @@ Keys are normalized (`Site Name` becomes `site_name`; accents are transliterated
 ### Security notes
 
 Values are stored as **plain text** in the database and in the cache: do not store secrets (API keys, passwords) here. The engine appends `setting.value` to `config.filter_parameters` so values don't appear in request logs.
+
+## Upgrading
+
+```bash
+bundle update lato_settings
+rails lato_settings:install:migrations
+rails db:migrate
+```
+
+Read [UPGRADING.md](UPGRADING.md) for the changes and extra steps required by each version.
 
 ## Development
 
